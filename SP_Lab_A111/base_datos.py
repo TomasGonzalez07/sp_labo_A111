@@ -47,3 +47,6 @@ def traer_datos_json(ruta:str)-> list:
             lista = json.load(archivo_json)
 
     return lista  
+
+def traer_datos_csv():
+    pass

@@ -93,10 +93,15 @@ def controlador_juego():
     #tiempo
     tiempo_inicial = time.time()
     tiempo_adivinar_logo = 30
-
     vidas = 5
     monedas = 0
     tiempo_jugado = 0
+
+    mostrando_imagen = False
+    imagen_mostrada = None
+    tiempo_mostrado = 0
+    espera_mostrar = 20 
+
 
     flag = True
 
@@ -118,29 +123,54 @@ def controlador_juego():
                     if cuadrado.collidepoint(x, y):
                         if cuadrados.index(cuadrado) == indice_cuadrado_verde:
                             print("Clic en el cuadrado verde")
+                            imagen_mostrada = imagenes["check_verde"]
+                            coordenadas = (cuadrado.x, cuadrado.y)
                             monedas += 20
                             tiempo_jugado += tiempo_transcurrido
-                            tiempo_inicial = time.time() 
-                            indice_cuadrado_verde = random.randint(0, 3)  
-                            indice_marca_actual = indice_marca_actual + 1
-                            if indice_marca_actual < len(lista_marcas):
-                                texto_marca = fuente.render(lista_marcas[indice_marca_actual], True, "black")
-                            else:
-                                texto_marca = fuente.render("Fin de las marcas", True, "black")
                         else:
+                            imagen_mostrada = imagenes["x_roja"]
+                            coordenadas = (cuadrado.x, cuadrado.y)
                             monedas -= 10
                             vidas -= 1
-                            print("Clic en un cuadrado rojo")
+
+                        mostrando_imagen = True
+                        tiempo_mostrado = pygame.time.get_ticks()  
+                        tiempo_inicial = time.time() 
+                        indice_cuadrado_verde = random.randint(0, 3)  
+                        indice_marca_actual = indice_marca_actual + 1
+                        if indice_marca_actual < len(lista_marcas):
+                            texto_marca = fuente.render(lista_marcas[indice_marca_actual], True, "black")
+                        else:
+                            texto_marca = fuente.render("Fin de las marcas", True, "black")
+
+
+        if tiempo_resta <= 0:
+            monedas -= 10
+            vidas -= 1
+            tiempo_inicial = time.time() 
+            indice_cuadrado_verde = random.randint(0, 3)  
+            indice_marca_actual = indice_marca_actual + 1
+            if indice_marca_actual < len(lista_marcas):
+                texto_marca = fuente.render(lista_marcas[indice_marca_actual], True, "black")
+            else:
+                texto_marca = fuente.render("Fin de las marcas", True, "black")
+            print("Clic en un cuadrado rojo")        
                    
 
         mostrar_datos(PANTALLA, imagenes, monedas, vidas, tiempo_resta, texto_marca, rect)
+        mostrar_cuadrados_con_logos(PANTALLA, cuadrados, logos_imagenes, lista_marcas, indice_marca_actual, indice_cuadrado_verde)  
 
-        mostrar_cuadrados_con_logos(PANTALLA, cuadrados, logos_imagenes, lista_marcas, indice_marca_actual, indice_cuadrado_verde)         
+        if mostrando_imagen:
+                    tiempo_actual = pygame.time.get_ticks()
+                    PANTALLA.blit(imagen_mostrada, coordenadas)   
+                    if tiempo_actual - tiempo_mostrado >= espera_mostrar:
+                        mostrando_imagen = False  
 
-
-        if tiempo_resta <= 0 or vidas == 0 or indice_marca_actual == len(lista_marcas): 
+        if vidas == 0 or indice_marca_actual == len(lista_marcas): 
             tiempo_resta = 0  
 
+            if indice_marca_actual == 0:
+                indice_marca_actual = 1
             promedio_tiempo_jugado = tiempo_jugado/indice_marca_actual
             promedio_tiempo_jugado_str = "{:.2f}s".format(promedio_tiempo_jugado) #formato con dos decimales
             nombre_jugador = obtener_nombre_jugador(PANTALLA, W, H, fuente, imagenes)

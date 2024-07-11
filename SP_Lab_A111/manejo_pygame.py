@@ -18,10 +18,9 @@ def mostrar_cuadrados_con_logos(pantalla, cuadrados, logos_imagenes, lista_marca
                 imagen_logo = logos_imagenes[marca_actual][0]  # Mostrar la primera imagen del logo verde
                 pantalla.blit(imagen_logo, (cuadrado.x, cuadrado.y))
         else:
-            pygame.draw.rect(pantalla, "red", cuadrado)  # Dibujar cuadrado rojo
+            pygame.draw.rect(pantalla, "red", cuadrado) # Dibujar cuadrado rojo
             if marca_actual and marca_actual in logos_imagenes:
-                for j in range(1, 4):  # Mostrar las imágenes 2, 3 y 4 en los cuadrados rojos
-                    imagen_logo = logos_imagenes[marca_actual][j]
+                    imagen_logo = logos_imagenes[marca_actual][i % 3 + 1]
                     pantalla.blit(imagen_logo, (cuadrado.x, cuadrado.y))
 
 def mostrar_datos(pantalla, imagenes, monedas, vidas, tiempo_r, texto_marca, rect):
@@ -106,6 +105,12 @@ def cargar_imagenes(W,H):
 
     imagenes["icono_reloj"] = pygame.image.load("1A111\SP_Lab_A111\imagenes\\icono_reloj.png")
     imagenes["icono_reloj"] = pygame.transform.scale(imagenes["icono_reloj"], (40, 40))
+
+    imagenes["check_verde"] = pygame.image.load("1A111\SP_Lab_A111\imagenes\\check_verde.png")
+    imagenes["check_verde"] = pygame.transform.scale(imagenes["check_verde"], (250, 250))
+
+    imagenes["x_roja"] = pygame.image.load("1A111\SP_Lab_A111\imagenes\\x_roja.png")
+    imagenes["x_roja"] = pygame.transform.scale(imagenes["x_roja"], (250, 250))
 
 
     imagenes["samsung(1)"] = pygame.image.load("1A111\SP_Lab_A111\imagenes\logos\samsung(1).jpeg")

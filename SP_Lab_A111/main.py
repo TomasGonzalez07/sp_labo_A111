@@ -24,5 +24,5 @@ llamada al controlador del juego
 
 from juego_p import *
 
-pantalla_inicio()
+pantalla_inicio()  
 
