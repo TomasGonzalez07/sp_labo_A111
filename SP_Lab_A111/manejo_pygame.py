@@ -4,6 +4,26 @@ carga de imagenes
 '''
 import pygame,sys
 
+def mostrar_cuadrados_con_logos(pantalla, cuadrados, logos_imagenes, lista_marcas, indice_marca_actual, indice_cuadrado_verde):
+    if indice_marca_actual < len(lista_marcas):
+        marca_actual = lista_marcas[indice_marca_actual]
+    else:
+        marca_actual = None
+
+    # Iterar sobre los cuadrados
+    for i, cuadrado in enumerate(cuadrados):
+        if i == indice_cuadrado_verde:
+            pygame.draw.rect(pantalla, "green", cuadrado)  # Dibujar cuadrado verde
+            if marca_actual and marca_actual in logos_imagenes:
+                imagen_logo = logos_imagenes[marca_actual][0]  # Mostrar la primera imagen del logo verde
+                pantalla.blit(imagen_logo, (cuadrado.x, cuadrado.y))
+        else:
+            pygame.draw.rect(pantalla, "red", cuadrado)  # Dibujar cuadrado rojo
+            if marca_actual and marca_actual in logos_imagenes:
+                for j in range(1, 4):  # Mostrar las imágenes 2, 3 y 4 en los cuadrados rojos
+                    imagen_logo = logos_imagenes[marca_actual][j]
+                    pantalla.blit(imagen_logo, (cuadrado.x, cuadrado.y))
+
 def mostrar_datos(pantalla, imagenes, monedas, vidas, tiempo_r, texto_marca, rect):
     fuente = pygame.font.SysFont("Times New Roman",26)
 
@@ -87,6 +107,7 @@ def cargar_imagenes(W,H):
     imagenes["icono_reloj"] = pygame.image.load("1A111\SP_Lab_A111\imagenes\\icono_reloj.png")
     imagenes["icono_reloj"] = pygame.transform.scale(imagenes["icono_reloj"], (40, 40))
 
+
     imagenes["samsung(1)"] = pygame.image.load("1A111\SP_Lab_A111\imagenes\logos\samsung(1).jpeg")
     imagenes["samsung(1)"] = pygame.transform.scale(imagenes["samsung(1)"], (250, 250))
     imagenes["samsung(2)"] = pygame.image.load("1A111\SP_Lab_A111\imagenes\logos\samsung(2).jpeg")
@@ -130,7 +151,7 @@ def cargar_imagenes(W,H):
     imagenes["pepsi(3)"] = pygame.image.load("1A111\SP_Lab_A111\imagenes\logos\pepsi(3).jpeg")
     imagenes["pepsi(3)"] = pygame.transform.scale(imagenes["pepsi(3)"], (250, 250))
     imagenes["pepsi(4)"] = pygame.image.load("1A111\SP_Lab_A111\imagenes\logos\pepsi(4).jpeg")
-    imagenes["pepsi(4)"] = pygame.transform.scale(imagenes[""], (250, 250))
+    imagenes["pepsi(4)"] = pygame.transform.scale(imagenes["pepsi(4)"], (250, 250))
 
     imagenes["cocacola(1)"] = pygame.image.load("1A111\SP_Lab_A111\imagenes\logos\cocacola(1).jpeg")
     imagenes["cocacola(1)"] = pygame.transform.scale(imagenes["cocacola(1)"], (250, 250))

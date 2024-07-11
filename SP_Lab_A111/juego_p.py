@@ -45,12 +45,28 @@ def controlador_juego():
     PANTALLA = pygame.display.set_mode(TAMAÑO_PANTALLA)
     pygame.display.set_caption("ADIVINA EL LOGO")
     imagenes = cargar_imagenes(W, H)
+    logos_imagenes = {
+    "SAMSUNG": [imagenes["samsung(1)"], imagenes["samsung(2)"], imagenes["samsung(3)"], imagenes["samsung(4)"]],
+    "APPLE": [imagenes["apple(1)"], imagenes["apple(2)"], imagenes["apple(3)"], imagenes["apple(4)"]],
+    "MC DONALD": [imagenes["mcdonalds(1)"], imagenes["mcdonalds(2)"], imagenes["mcdonalds(3)"], imagenes["mcdonalds(4)"]],
+    "BURGER KING": [imagenes["burgerking(1)"], imagenes["burgerking(2)"], imagenes["burgerking(3)"], imagenes["burgerking(4)"]],
+    "PEPSI": [imagenes["pepsi(1)"], imagenes["pepsi(2)"], imagenes["pepsi(3)"], imagenes["pepsi(4)"]],
+    "COCA COLA": [imagenes["cocacola(1)"], imagenes["cocacola(2)"], imagenes["cocacola(3)"], imagenes["cocacola(4)"]],
+    "PUMA": [imagenes["puma(1)"], imagenes["puma(2)"], imagenes["puma(3)"], imagenes["puma(4)"]],
+    "POLO": [imagenes["polo(1)"], imagenes["polo(2)"], imagenes["polo(3)"], imagenes["polo(4)"]],
+    "NIKE": [imagenes["nike(1)"], imagenes["nike(2)"], imagenes["nike(3)"], imagenes["nike(4)"]],
+    "ADIDAS": [imagenes["adidas(1)"], imagenes["adidas(2)"], imagenes["adidas(3)"], imagenes["adidas(4)"]],
+    "TOMMY HILFIGER": [imagenes["tommy(1)"], imagenes["tommy(2)"], imagenes["tommy(3)"], imagenes["tommy(4)"]],
+    "MICROSOFT": [imagenes["microsoft(1)"], imagenes["microsoft(2)"], imagenes["microsoft(3)"], imagenes["microsoft(4)"]],
+    "GOOGLE": [imagenes["google(1)"], imagenes["google(2)"], imagenes["google(3)"], imagenes["google(4)"]],
+    "HYUNDAI": [imagenes["hyundai(1)"], imagenes["hyundai(2)"], imagenes["hyundai(3)"], imagenes["hyundai(4)"]],
+    "LG": [imagenes["lg(1)"], imagenes["lg(2)"], imagenes["lg(3)"], imagenes["lg(4)"]]
+    }
 
     pygame.display.set_icon(imagenes["icono"])
 
     #fuente
     fuente = pygame.font.SysFont("Times New Roman", 40)
-    fuente_resultados = pygame.font.SysFont("Times New Roman", 16)
     
     #rectangulo marcas
     ancho_rectangulo, alto_rectangulo = 400, 200
@@ -115,14 +131,11 @@ def controlador_juego():
                             monedas -= 10
                             vidas -= 1
                             print("Clic en un cuadrado rojo")
+                   
 
         mostrar_datos(PANTALLA, imagenes, monedas, vidas, tiempo_resta, texto_marca, rect)
 
-        for cuadrado in cuadrados:
-            if cuadrados.index(cuadrado) == indice_cuadrado_verde:
-                pygame.draw.rect(PANTALLA, "green", cuadrado)
-            else:
-                pygame.draw.rect(PANTALLA, "red", cuadrado)
+        mostrar_cuadrados_con_logos(PANTALLA, cuadrados, logos_imagenes, lista_marcas, indice_marca_actual, indice_cuadrado_verde)         
 
 
         if tiempo_resta <= 0 or vidas == 0 or indice_marca_actual == len(lista_marcas): 
@@ -133,8 +146,6 @@ def controlador_juego():
             nombre_jugador = obtener_nombre_jugador(PANTALLA, W, H, fuente, imagenes)
             guardar_datos(nombre_jugador, monedas, promedio_tiempo_jugado_str)
             flag = False
-
-        # mostrar_resultados(PANTALLA, H, fuente_resultados) 
               
 
         pygame.display.flip()

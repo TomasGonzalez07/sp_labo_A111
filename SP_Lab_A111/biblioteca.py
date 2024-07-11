@@ -40,3 +40,5 @@ def mostrar_resultados(pantalla, H, fuente):
     pantalla.blit(texto_prev_nombre, (250, H - 45))
     pantalla.blit(texto_prev_puntaje, (250, H - 30))
     pantalla.blit(texto_prev_promedio_tiempo_jugado, (250, H - 15))
+
+
